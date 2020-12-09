@@ -1,6 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="5" android:versionName="1.0" package="com.scratchzhunyu" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="27" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="7" android:versionName="1.2" package="com.scratchzhunyu" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="17" android:targetSdkVersion="29" />
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
-	<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:supportsRtl="true" android:theme="@style/AppTheme"></application>
+	<uses-feature
+			android:name="android.hardware.screen.portrait"
+			android:required="false" />
+	<uses-feature
+	android:name="android.hardware.microphone"
+	android:required="false" />
+	<application 
+		android:allowBackup="true" 
+		android:icon="@mipmap/ic_launcher" 
+		android:label="@string/app_name" 
+		android:supportsRtl="true" 
+		android:theme="@style/AppTheme">
+		<activity android:name=".SplashActivity"
+				  android:banner="@drawable/splash">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+			</intent-filter>
+			
+		</activity>
+
+		<activity android:name=".MainActivity" >
+		</activity>
+		
+	</application>
 </manifest>
