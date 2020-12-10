@@ -25,22 +25,46 @@ namespace Poltava.Activities
             base.OnCreate(savedInstanceState);
             _drawField = new DrawView(this);
             SetContentView(Resource.Layout.FieldView);
-            var btnNextStep = FindViewById<Button>(Resource.Id.btnNextStep);
+            var btnLeft = FindViewById<Button>(Resource.Id.btnStepLeft);
+            var btnRight = FindViewById<Button>(Resource.Id.btnStepRight);
+            var btnUp = FindViewById<Button>(Resource.Id.btnStepUp);
+            var btnDown = FindViewById<Button>(Resource.Id.btnStepDown);
             var frame = FindViewById<FrameLayout>(Resource.Id.frFieldView);
             _drawField.LayoutParameters = new LinearLayout.LayoutParams(frame.LayoutParameters);         
             frame.AddView(_drawField);
             _sheepView = new SheepView(this);
             frame.AddView(_sheepView);
-            btnNextStep.Click += (s, e) => MoveSheep( );
+            btnLeft.Click += (s, e) => MoveLeft( );
+            btnRight.Click += (s, e) => MoveRight();
+            btnUp.Click += (s, e) => MoveUp();
+            btnDown.Click += (s, e) => MoveDown();
         }
 
+       
 
-        private void MoveSheep( )
+        private void MoveDown()
         {
-            var screen = ScreenSizePx.GetSize(this);
-            _sheepView.SetX(_sheepView.GetX() + 10);
             _sheepView.SetY(_sheepView.GetY() + 10);
             _sheepView.Invalidate();
+        }
+
+        private void MoveUp()
+        {
+            _sheepView.SetY(_sheepView.GetY() - 10);
+            _sheepView.Invalidate();
+        }
+
+        private void MoveRight()
+        {
+            _sheepView.SetX(_sheepView.GetX() + 10);
+            _sheepView.Invalidate();
+        }
+
+        private void MoveLeft( )
+        {
+         //   var screen = ScreenSizePx.GetSize(this);
+            _sheepView.SetX(_sheepView.GetX() - 10);
+          
         }
     }
 

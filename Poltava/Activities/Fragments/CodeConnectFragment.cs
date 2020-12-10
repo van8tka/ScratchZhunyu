@@ -49,7 +49,7 @@ namespace Poltava.Activities.Fragments
             base.OnStart();
             var code = GetRandomCode().ToString();
             tvCodeConnection.Text = code;
-            _webService.SendCodeConnect(code);
+            _webService.SendCodeConnect(code, "battle_field");
         }
          
         private int GetRandomCode()
