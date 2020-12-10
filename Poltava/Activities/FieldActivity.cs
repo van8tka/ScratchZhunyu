@@ -37,51 +37,106 @@ namespace Poltava.Activities
             btnLeft.Click += (s, e) => MoveLeft( );
             btnRight.Click += (s, e) => MoveRight();
             btnUp.Click += (s, e) => MoveUp();
-            btnDown.Click += (s, e) => MoveDown();
+            btnDown.Click += (s, e) => MoveDown();           
         }
 
-       
+        protected override void OnStart()
+        {
+            base.OnStart();
+            _border = new Border()
+            {
+                Top = 5,
+                Left = 5,
+                Bottom = ScreenSizePx.GetSize(this).Item1 - 5,
+                Right = ScreenSizePx.GetSize(this).Item2 - 5
+            };
+        }
 
+
+        private Border _border;
+
+        private struct Border
+        {
+            public int Top;  
+            public int Bottom;
+            public int Left;
+            public int Right;
+        }
+        
+        private int stepSize = 50;
         private void MoveDown()
         {
-            _sheepView.SetY(_sheepView.GetY() + 10);
+            _sheepView.PositionY += stepSize;
             _sheepView.Invalidate();
         }
 
         private void MoveUp()
         {
-            _sheepView.SetY(_sheepView.GetY() - 10);
+            _sheepView.PositionY -= stepSize;
             _sheepView.Invalidate();
         }
 
         private void MoveRight()
         {
-            _sheepView.SetX(_sheepView.GetX() + 10);
+            _sheepView.PositionX += stepSize;
             _sheepView.Invalidate();
         }
 
         private void MoveLeft( )
         {
-         //   var screen = ScreenSizePx.GetSize(this);
-            _sheepView.SetX(_sheepView.GetX() - 10);
-          
+            _sheepView.PositionX -= stepSize;
+            _sheepView.Invalidate();
         }
     }
 
     public class SheepView : View
     {
-        private int positionX, positionY;
+        private int _positionX, _positionY;
+        private int HeightScreen, WidthScreen;
+        double imageHeight;
+        double imageWidth;
+        private Context _context;
+        public int PositionX { get => _positionX; set {
+                if (value >= 0 && value <= WidthScreen - imageWidth )
+                    _positionX = value;
+                else
+                    BorderMsg();
+            }
+        }
+
+        public int PositionY
+        {
+            get => _positionY; set {
+                if (value >= 0 && value <= HeightScreen - imageHeight)
+                    _positionY = value;
+                else
+                    BorderMsg();
+            }
+        }
+
+        private void BorderMsg()
+        {
+            Toast.MakeText(_context, "Вы достигли границы игрового поля!", ToastLength.Short).Show();
+        }
+
         public SheepView(Context context):base(context)
         {
+            _context = context;
             var screen = ScreenSizePx.GetSize(context as Activity);
-            positionX = screen.Item2/2;
-            positionY = screen.Item1/2;
+            HeightScreen = screen.Item1;
+            WidthScreen = screen.Item2;
+            PositionY = HeightScreen/2;
+            PositionX = WidthScreen/2;
         }
+
+     
 
         protected override void OnDraw(Canvas canvas)
         {
-            Bitmap bitmap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.sheep);          
-            canvas.DrawBitmap(bitmap, positionX, positionY, null);
+            Bitmap bitmap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.sheep);
+            imageHeight = bitmap.Height;
+            imageWidth = bitmap.Width;
+            canvas.DrawBitmap(bitmap, PositionX, PositionY, null);
             base.OnDraw(canvas);
         }
 
