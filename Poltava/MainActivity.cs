@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Poltava
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme")]
+    [Activity(Label = "@string/app_name", MainLauncher = true, Theme = "@style/AppTheme")]
     public class MainActivity : AppCompatActivity
     {
         private Button btnField, btnGamePad;

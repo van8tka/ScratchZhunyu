@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
         android:text="Это игровое планшет, через него управляем фигурками на игровом поле!"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"       
         android:layout_gravity="center"
         android:gravity="center"/>
-</LinearLayout>
+     <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:orientation="vertical"
+        >
+          <Button
+               android:layout_marginBottom="5dp"
+               android:layout_marginLeft="75dp"
+               android:layout_width="70dp"
+               android:layout_height="70dp"
+               android:text="Верх"
+               android:background="@color/paint_color"
+               android:id="@+id/btnStepUp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="80dp"
+                    android:text="Лев"
+                    android:background="@color/paint_color"
+                    android:id="@+id/btnStepLeft"/>
+                <Button
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text="Прав"
+                    android:background="@color/paint_color"
+                    android:id="@+id/btnStepRight"/>            
+              </LinearLayout> 
+         <Button
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:text="Низ"
+            android:background="@color/paint_color"
+            android:id="@+id/btnStepDown"/>
+        </LinearLayout>   
+</RelativeLayout>

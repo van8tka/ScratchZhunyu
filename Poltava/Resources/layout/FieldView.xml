@@ -10,48 +10,8 @@
         android:layout_height="match_parent" />
     <TextView
         android:text="Это игровое поле, здесь перемещаются фигурки!"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"       
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"/>
-    <LinearLayout
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:orientation="vertical"
-        >
-          <Button
-               android:layout_marginBottom="5dp"
-               android:layout_marginLeft="75dp"
-               android:layout_width="70dp"
-               android:layout_height="70dp"
-               android:text="Верх"
-               android:background="@color/paint_color"
-               android:id="@+id/btnStepUp"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginRight="80dp"
-                    android:text="Лев"
-                    android:background="@color/paint_color"
-                    android:id="@+id/btnStepLeft"/>
-                <Button
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:text="Прав"
-                    android:background="@color/paint_color"
-                    android:id="@+id/btnStepRight"/>            
-              </LinearLayout> 
-         <Button
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:text="Низ"
-            android:background="@color/paint_color"
-            android:id="@+id/btnStepDown"/>
-        </LinearLayout>   
+        android:gravity="center_horizontal"/> 
 </RelativeLayout>

@@ -1,68 +1,64 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Poltava.Interfaces;
+using Poltava.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Poltava.Activities
 {
-    [Activity(Label = "FieldActivity", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
+    [Activity(Label = "FieldActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
     public class FieldActivity : Activity
     {
         private DrawView _drawField;
         private SheepView _sheepView;
+        private IWebService _webService;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             _drawField = new DrawView(this);
-            SetContentView(Resource.Layout.FieldView);
-            var btnLeft = FindViewById<Button>(Resource.Id.btnStepLeft);
-            var btnRight = FindViewById<Button>(Resource.Id.btnStepRight);
-            var btnUp = FindViewById<Button>(Resource.Id.btnStepUp);
-            var btnDown = FindViewById<Button>(Resource.Id.btnStepDown);
+            SetContentView(Resource.Layout.FieldView);        
             var frame = FindViewById<FrameLayout>(Resource.Id.frFieldView);
             _drawField.LayoutParameters = new LinearLayout.LayoutParams(frame.LayoutParameters);         
             frame.AddView(_drawField);
             _sheepView = new SheepView(this);
             frame.AddView(_sheepView);
-            btnLeft.Click += (s, e) => MoveLeft( );
-            btnRight.Click += (s, e) => MoveRight();
-            btnUp.Click += (s, e) => MoveUp();
-            btnDown.Click += (s, e) => MoveDown();           
+            _webService = new WebService();
+            CheckStep();
         }
-
-        protected override void OnStart()
+ 
+        private async void CheckStep()
         {
-            base.OnStart();
-            _border = new Border()
+            while(true)
             {
-                Top = 5,
-                Left = 5,
-                Bottom = ScreenSizePx.GetSize(this).Item1 - 5,
-                Right = ScreenSizePx.GetSize(this).Item2 - 5
-            };
+                var dirrect = await _webService.GetStep();
+                switch (dirrect)
+                {
+                    case Enumerables.Dirrection.Left:
+                        MoveLeft();
+                        break;
+                    case Enumerables.Dirrection.Right:
+                        MoveRight();
+                        break;
+                    case Enumerables.Dirrection.Up:
+                        MoveUp();
+                        break;
+                    case Enumerables.Dirrection.Down:
+                        MoveDown();
+                        break;
+                    default:
+                        break;
+                }
+                await Task.Delay(1000);              
+            }
+                    
         }
 
-
-        private Border _border;
-
-        private struct Border
-        {
-            public int Top;  
-            public int Bottom;
-            public int Left;
-            public int Right;
-        }
-        
         private int stepSize = 50;
         private void MoveDown()
         {
