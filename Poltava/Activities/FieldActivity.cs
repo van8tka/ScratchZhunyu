@@ -1,23 +1,21 @@
 ﻿using Android.App;
-using Android.Content;
-using Android.Graphics;
 using Android.OS;
-using Android.Util;
-using Android.Views;
 using Android.Widget;
+using Poltava.Activities.Fragments;
 using Poltava.Interfaces;
 using Poltava.Services;
-using System;
+using Poltava.Views;
 using System.Threading.Tasks;
 
 namespace Poltava.Activities
 {
     [Activity(Label = "FieldActivity", ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape)]
-    public class FieldActivity : Activity
+    public class FieldActivity : Activity, IPlayerAction
     {
         private DrawView _drawField;
         private SheepView _sheepView;
         private IWebService _webService;
+        private int stepSize = 50;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -30,6 +28,13 @@ namespace Poltava.Activities
             frame.AddView(_sheepView);
             _webService = new WebService();
             CheckStep();
+        }
+
+        protected override async void OnStart()
+        {
+            base.OnStart();
+            var fragment = CodeConnectFragment.NewInstance(null);
+            fragment.Show(FragmentManager.BeginTransaction(), "code_dialog");          
         }
  
         private async void CheckStep()
@@ -59,112 +64,30 @@ namespace Poltava.Activities
                     
         }
 
-        private int stepSize = 50;
-        private void MoveDown()
+       
+        public void MoveDown()
         {
             _sheepView.PositionY += stepSize;
             _sheepView.Invalidate();
         }
 
-        private void MoveUp()
+        public void MoveUp()
         {
             _sheepView.PositionY -= stepSize;
             _sheepView.Invalidate();
         }
 
-        private void MoveRight()
+        public void MoveRight()
         {
             _sheepView.PositionX += stepSize;
             _sheepView.Invalidate();
         }
 
-        private void MoveLeft( )
+        public void MoveLeft( )
         {
             _sheepView.PositionX -= stepSize;
             _sheepView.Invalidate();
         }
     }
-
-    public class SheepView : View
-    {
-        private int _positionX, _positionY;
-        private int HeightScreen, WidthScreen;
-        double imageHeight;
-        double imageWidth;
-        private Context _context;
-        public int PositionX { get => _positionX; set {
-                if (value >= 0 && value <= WidthScreen - imageWidth )
-                    _positionX = value;
-                else
-                    BorderMsg();
-            }
-        }
-
-        public int PositionY
-        {
-            get => _positionY; set {
-                if (value >= 0 && value <= HeightScreen - imageHeight)
-                    _positionY = value;
-                else
-                    BorderMsg();
-            }
-        }
-
-        private void BorderMsg()
-        {
-            Toast.MakeText(_context, "Вы достигли границы игрового поля!", ToastLength.Short).Show();
-        }
-
-        public SheepView(Context context):base(context)
-        {
-            _context = context;
-            var screen = ScreenSizePx.GetSize(context as Activity);
-            HeightScreen = screen.Item1;
-            WidthScreen = screen.Item2;
-            PositionY = HeightScreen/2;
-            PositionX = WidthScreen/2;
-        }
-
-     
-
-        protected override void OnDraw(Canvas canvas)
-        {
-            Bitmap bitmap = BitmapFactory.DecodeResource(Resources, Resource.Drawable.sheep);
-            imageHeight = bitmap.Height;
-            imageWidth = bitmap.Width;
-            canvas.DrawBitmap(bitmap, PositionX, PositionY, null);
-            base.OnDraw(canvas);
-        }
-
-    }
-
-
-    public class DrawView : View
-    {
-        private int _width;
-        private int _height;
-        public DrawView(Context context) : base(context)
-        {
-            var screen = ScreenSizePx.GetSize(context as Activity);
-            _width = screen.Item2;
-            _height = screen.Item1;
-        }
-        protected override void OnDraw(Canvas canvas)
-        {
-            Bitmap bitmapRaw = BitmapFactory.DecodeResource(Resources, Resource.Drawable.see_map1024);
-            Bitmap bitmap = Bitmap.CreateScaledBitmap(bitmapRaw, _width, _height, false);
-            canvas.DrawBitmap(bitmap, 0, 0, null);
-            base.OnDraw(canvas);
-        }
-    }
-
-    public static class ScreenSizePx
-    {
-        public static Tuple<int, int> GetSize(Activity activity)
-        {
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            activity.WindowManager.DefaultDisplay.GetMetrics(displayMetrics);
-            return new Tuple<int, int>(displayMetrics.HeightPixels, displayMetrics.WidthPixels);
-        }
-    }
+ 
 }

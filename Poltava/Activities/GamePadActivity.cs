@@ -4,12 +4,11 @@ using Android.Widget;
 using Poltava.Enumerables;
 using Poltava.Interfaces;
 using Poltava.Services;
-using System.Threading.Tasks;
 
 namespace Poltava.Activities
 {
     [Activity(Label = "GamePadActivity")]
-    public class GamePadActivity : Activity
+    public class GamePadActivity : Activity, IPlayerAction
     {
         private IWebService _webService;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -27,22 +26,22 @@ namespace Poltava.Activities
             _webService = new WebService();
         }
 
-        private async Task MoveDown()
+        public async void MoveDown()
         {
            await _webService.SendStep(Dirrection.Down);
         }
 
-        private async Task MoveUp()
+        public async void MoveUp()
         {
             await _webService.SendStep(Dirrection.Up);
         }
 
-        private async Task MoveRight()
+        public async void MoveRight()
         {
             await _webService.SendStep(Dirrection.Right);
         }
 
-        private async Task MoveLeft()
+        public async void MoveLeft()
         {
             await _webService.SendStep(Dirrection.Left);
         }

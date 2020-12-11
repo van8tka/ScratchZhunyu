@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="20dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvTitleCodeEnter"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:text="Введите код, указанный на игровом поле"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:id="@+id/edCodeEnter"
+        android:inputType="text" 
+        />
+    <Button 
+        android:layout_marginTop="15dp"
+        android:id="@+id/btnContinueCodeEdt"
+        android:layout_width="match_parent"           
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Продолжить"
+        />
+</LinearLayout>

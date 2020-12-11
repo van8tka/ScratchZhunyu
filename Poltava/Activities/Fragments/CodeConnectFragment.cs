@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using Poltava.Enumerables;
 using Poltava.Interfaces;
 using Poltava.Services;
 using System;
@@ -43,7 +44,7 @@ namespace Poltava.Activities.Fragments
             base.OnStart();
             var code = GetRandomCode().ToString();
             tvCodeConnection.Text = code;
-            _webService.SendCodeConnect(code, "battle_field");
+            _webService.SendCodeConnect(code, TypeGameController.BattleField.ToString());
         }
          
         private int GetRandomCode()

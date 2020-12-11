@@ -26,23 +26,22 @@ namespace Poltava
             btnGamePad.Click += BtnGamePad_Click;
         }
 
-        private void BtnGamePad_Click(object sender, System.EventArgs e)
+        private async void BtnGamePad_Click(object sender, System.EventArgs e)
         {
-            var intent = new Intent(this, typeof(GamePadActivity));
-            StartActivity(intent);
-        }
-
-        private async void BtnField_Click(object sender, System.EventArgs e)
-        {
-            var fragment = CodeConnectFragment.NewInstance(null);
-            fragment.Show(FragmentManager.BeginTransaction(), "code_dialog");
+            var fragment = CodeEnterFragment.NewInstance(null);
+            fragment.Show(FragmentManager.BeginTransaction(), "code_enter_dialog");
             await Task.Run(() => {
                 while (!fragment.IsDestruct)
                 {
                     Task.Delay(500);
                 };
             });
-           
+            var intent = new Intent(this, typeof(GamePadActivity));
+            StartActivity(intent);
+        }
+
+        private void BtnField_Click(object sender, System.EventArgs e)
+        {
             var intent = new Intent(this, typeof(FieldActivity));
             StartActivity(intent);
         }

@@ -63,13 +63,19 @@
   <ItemGroup>
     <Compile Include="Activities\FieldActivity.cs" />
     <Compile Include="Activities\Fragments\CodeConnectFragment.cs" />
+    <Compile Include="Activities\Fragments\CodeEnterFragment.cs" />
     <Compile Include="Activities\GamePadActivity.cs" />
     <Compile Include="Enumerables\Dirrection.cs" />
+    <Compile Include="Enumerables\TypeGameController.cs" />
+    <Compile Include="Interfaces\IPlayerAction.cs" />
     <Compile Include="Interfaces\IWebService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\WebService.cs" />
+    <Compile Include="Utils\ScreenSizePx.cs" />
+    <Compile Include="Views\DrawView.cs" />
+    <Compile Include="Views\SheepView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -102,7 +108,11 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\fragment_code_enter.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
